@@ -1,0 +1,36 @@
+import api from './api';
+
+export interface Shop {
+    id?: number;
+    name: string;
+    address: string;
+    phoneNumber: string;
+    openingTime: string;
+    closingTime: string;
+    owner?: any;
+}
+
+const getAllShops = () => {
+    return api.get<Shop[]>('/shops');
+};
+
+const getMyShops = () => {
+    return api.get<Shop[]>('/shops/my-shops');
+};
+
+const createShop = (shop: Shop) => {
+    return api.post<Shop>('/shops', shop);
+};
+
+const getShopById = (id: string) => {
+    return api.get<Shop>(`/shops/${id}`);
+};
+
+const ShopService = {
+    getAllShops,
+    getMyShops,
+    createShop,
+    getShopById
+};
+
+export default ShopService;
