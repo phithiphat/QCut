@@ -10,6 +10,7 @@ COPY mvnw pom.xml ./
 
 # Install dependencies (this step is cached if pom.xml doesn't change)
 # Note: We run a dependency:go-offline to download dependencies
+RUN chmod +x mvnw
 RUN ./mvnw dependency:go-offline
 
 # Copy the project source
