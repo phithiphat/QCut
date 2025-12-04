@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import AuthService from '../services/auth.service';
 
 const Login: React.FC = () => {
@@ -36,9 +36,9 @@ const Login: React.FC = () => {
                     </h2>
                     <p className="mt-2 text-center text-sm text-gray-600">
                         Or{' '}
-                        <a href="/register" className="font-medium text-blue-600 hover:text-blue-500">
+                        <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500">
                             create a new account
-                        </a>
+                        </Link>
                     </p>
                 </div>
                 <form className="mt-8 space-y-6" onSubmit={handleLogin}>
