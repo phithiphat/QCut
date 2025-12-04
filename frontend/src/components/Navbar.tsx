@@ -45,7 +45,6 @@ const Navbar: React.FC = () => {
                             ) : (
                                 <>
                                     <NavLink to="/" active={isActive('/')}>Home</NavLink>
-                                    <a href="#features" className="text-gray-600 hover:text-blue-600 font-medium transition">Features</a>
                                 </>
                             )}
                         </div>
