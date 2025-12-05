@@ -111,11 +111,17 @@ public class BookingController {
 
     @PutMapping("/{id}/status")
     public ResponseEntity<?> updateBookingStatus(@PathVariable Long id, @RequestParam String status) {
+        System.out.println("=== CANCEL REQUEST RECEIVED ===");
+        System.out.println("Booking ID: " + id);
+        System.out.println("New Status: " + status);
+
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
 
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User currentUser = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
+
+        System.out.println("Current User: " + currentUser.getUsername() + " (ID: " + currentUser.getId() + ")");
 
         try {
             Booking.Status newStatus = Booking.Status.valueOf(status.toUpperCase());
@@ -123,8 +129,11 @@ public class BookingController {
             // Simplified: For now, any authenticated user can update the status
             // TODO: Add proper authorization checks back later
             booking.setStatus(newStatus);
-            return ResponseEntity.ok(bookingRepository.save(booking));
+            Booking saved = bookingRepository.save(booking);
+            System.out.println("=== CANCEL SUCCESS ===");
+            return ResponseEntity.ok(saved);
         } catch (IllegalArgumentException e) {
+            System.out.println("=== CANCEL FAILED: Invalid status ===");
             return ResponseEntity.badRequest().body("Invalid status");
         }
     }
