@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ShopList from './pages/ShopList';
 import CreateShop from './pages/CreateShop';
+import EditShop from './pages/EditShop';
 import CreateBooking from './pages/CreateBooking';
 import ShopBookings from './pages/ShopBookings';
 import MyBookings from './pages/MyBookings';
@@ -48,6 +49,14 @@ function App() {
             element={
               <PrivateRoute>
                 <CreateShop />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/shop/:id/edit"
+            element={
+              <PrivateRoute>
+                <EditShop />
               </PrivateRoute>
             }
           />
