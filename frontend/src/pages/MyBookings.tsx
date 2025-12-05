@@ -57,6 +57,21 @@ const MyBookings: React.FC = () => {
                                         <span>Barber: <span className="font-medium text-gray-900">{booking.barber.name}</span></span>
                                     </div>
                                 )}
+
+                                {(booking.status === 'PENDING' || booking.status === 'CONFIRMED') && (
+                                    <button
+                                        onClick={() => {
+                                            if (window.confirm('Are you sure you want to cancel this booking?')) {
+                                                BookingService.updateBookingStatus(booking.id, 'CANCELLED').then(() => {
+                                                    setBookings(bookings.map(b => b.id === booking.id ? { ...b, status: 'CANCELLED' } : b));
+                                                });
+                                            }
+                                        }}
+                                        className="mt-4 w-full py-2 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 font-medium transition"
+                                    >
+                                        Cancel Booking
+                                    </button>
+                                )}
                             </div>
                         </div>
                     ))}

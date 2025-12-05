@@ -14,14 +14,25 @@ const ShopList: React.FC = () => {
             setCurrentUser(user);
         }
 
-        ShopService.getAllShops().then(
-            (response) => {
-                setShops(response.data);
-            },
-            (error) => {
-                console.error('Error fetching shops:', error);
-            }
-        );
+        if (user && user.role === 'OWNER') {
+            ShopService.getMyShops().then(
+                (response) => {
+                    setShops(response.data);
+                },
+                (error) => {
+                    console.error('Error fetching my shops:', error);
+                }
+            );
+        } else {
+            ShopService.getAllShops().then(
+                (response) => {
+                    setShops(response.data);
+                },
+                (error) => {
+                    console.error('Error fetching shops:', error);
+                }
+            );
+        }
     }, []);
 
     return (

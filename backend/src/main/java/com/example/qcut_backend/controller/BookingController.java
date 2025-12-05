@@ -114,10 +114,28 @@ public class BookingController {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
 
-        // TODO: Add check if current user is the owner of the shop
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
 
         try {
-            booking.setStatus(Booking.Status.valueOf(status.toUpperCase()));
+            Booking.Status newStatus = Booking.Status.valueOf(status.toUpperCase());
+
+            // Authorization Logic
+            if (newStatus == Booking.Status.CANCELLED) {
+                // Only the user who made the booking or the shop owner can cancel
+                if (!booking.getUser().getId().equals(currentUser.getId()) &&
+                        !booking.getShop().getOwner().getId().equals(currentUser.getId())) {
+                    return ResponseEntity.status(403).body("You are not authorized to cancel this booking.");
+                }
+            } else {
+                // Only the shop owner can change other statuses (CONFIRMED, REJECTED,
+                // COMPLETED)
+                if (!booking.getShop().getOwner().getId().equals(currentUser.getId())) {
+                    return ResponseEntity.status(403).body("You are not authorized to manage this booking.");
+                }
+            }
+
+            booking.setStatus(newStatus);
             return ResponseEntity.ok(bookingRepository.save(booking));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("Invalid status");
