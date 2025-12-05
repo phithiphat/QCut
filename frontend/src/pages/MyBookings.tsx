@@ -61,7 +61,7 @@ const MyBookings: React.FC = () => {
                                 {(booking.status === 'PENDING' || booking.status === 'CONFIRMED') && (
                                     <button
                                         onClick={() => {
-                                            if (window.confirm('Are you sure you want to cancel this booking?')) {
+                                            if (window.confirm('Are you sure you want to cancel this booking?') && booking.id) {
                                                 BookingService.updateBookingStatus(booking.id, 'CANCELLED').then(() => {
                                                     setBookings(bookings.map(b => b.id === booking.id ? { ...b, status: 'CANCELLED' } : b));
                                                 });

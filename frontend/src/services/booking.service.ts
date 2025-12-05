@@ -1,7 +1,7 @@
 import api from './api';
 
 export interface Booking {
-    id?: number;
+    id: number;
     shopId: number;
     serviceId: number;
     startTime: string; // ISO String
