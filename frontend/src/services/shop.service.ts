@@ -27,11 +27,16 @@ const getShopById = (id: string) => {
     return api.get<Shop>(`/shops/${id}`);
 };
 
+const updateShop = (id: number, shop: Shop) => {
+    return api.put<Shop>(`/shops/${id}`, shop);
+};
+
 const ShopService = {
     getAllShops,
     getMyShops,
     createShop,
-    getShopById
+    getShopById,
+    updateShop
 };
 
 export default ShopService;

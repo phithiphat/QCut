@@ -74,4 +74,28 @@ public class ShopController {
     public ResponseEntity<List<com.example.qcut_backend.model.BarberService>> getShopServices(@PathVariable Long id) {
         return ResponseEntity.ok(serviceRepository.findByShopId(id));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateShop(@PathVariable Long id, @RequestBody Shop shopUpdate) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
+
+        Shop existingShop = shopRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Shop not found"));
+
+        // Check if current user is the owner
+        if (!existingShop.getOwner().getId().equals(currentUser.getId())) {
+            return ResponseEntity.status(403).body("You are not authorized to edit this shop.");
+        }
+
+        // Update shop fields
+        existingShop.setName(shopUpdate.getName());
+        existingShop.setAddress(shopUpdate.getAddress());
+        existingShop.setPhoneNumber(shopUpdate.getPhoneNumber());
+        existingShop.setOpeningTime(shopUpdate.getOpeningTime());
+        existingShop.setClosingTime(shopUpdate.getClosingTime());
+        existingShop.setImageUrl(shopUpdate.getImageUrl());
+
+        return ResponseEntity.ok(shopRepository.save(existingShop));
+    }
 }

@@ -78,7 +78,13 @@ const ShopList: React.FC = () => {
                                     </Link>
 
                                     {currentUser && currentUser.role === 'OWNER' && (
-                                        <div className="grid grid-cols-2 gap-3">
+                                        <div className="grid grid-cols-3 gap-2">
+                                            <Link
+                                                to={`/shop/${shop.id}/edit`}
+                                                className="block w-full text-center bg-green-100 text-green-700 py-2 rounded-lg text-sm font-medium hover:bg-green-200 transition"
+                                            >
+                                                Edit
+                                            </Link>
                                             <Link
                                                 to={`/shop/${shop.id}/bookings`}
                                                 className="block w-full text-center bg-gray-100 text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition"
