@@ -31,12 +31,17 @@ const updateShop = (id: number, shop: Shop) => {
     return api.put<Shop>(`/shops/${id}`, shop);
 };
 
+const deleteShop = (id: number) => {
+    return api.delete(`/shops/${id}`);
+};
+
 const ShopService = {
     getAllShops,
     getMyShops,
     createShop,
     getShopById,
-    updateShop
+    updateShop,
+    deleteShop
 };
 
 export default ShopService;

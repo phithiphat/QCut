@@ -55,6 +55,25 @@ const EditShop: React.FC = () => {
         }
     };
 
+    const handleDeleteShop = async () => {
+        if (!id) return;
+
+        const confirmed = window.confirm(
+            'Are you sure you want to delete this shop? This action cannot be undone.'
+        );
+
+        if (!confirmed) return;
+
+        try {
+            await ShopService.deleteShop(parseInt(id));
+            alert('Shop deleted successfully!');
+            navigate('/shops');
+        } catch (error) {
+            console.error('Error deleting shop:', error);
+            alert('Failed to delete shop');
+        }
+    };
+
     if (loading) {
         return <div className="container mx-auto px-4 py-8 text-center">Loading...</div>;
     }
@@ -141,6 +160,13 @@ const EditShop: React.FC = () => {
                             Cancel
                         </button>
                     </div>
+                    <button
+                        type="button"
+                        onClick={handleDeleteShop}
+                        className="w-full bg-red-600 text-white py-3 rounded-lg font-semibold hover:bg-red-700 transition shadow-md hover:shadow-lg mt-4"
+                    >
+                        Delete Shop
+                    </button>
                 </form>
             </div>
         </div>

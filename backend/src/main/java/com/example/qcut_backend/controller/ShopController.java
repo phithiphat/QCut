@@ -98,4 +98,21 @@ public class ShopController {
 
         return ResponseEntity.ok(shopRepository.save(existingShop));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteShop(@PathVariable Long id) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
+
+        Shop shop = shopRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Shop not found"));
+
+        // Check if current user is the owner
+        if (!shop.getOwner().getId().equals(currentUser.getId())) {
+            return ResponseEntity.status(403).body("You are not authorized to delete this shop.");
+        }
+
+        shopRepository.delete(shop);
+        return ResponseEntity.ok("Shop deleted successfully");
+    }
 }
