@@ -122,6 +122,11 @@ public class BookingController {
 
             // Authorization Logic
             if (newStatus == Booking.Status.CANCELLED) {
+                System.out.println("DEBUG: Cancel Request - Booking ID: " + booking.getId());
+                System.out.println("DEBUG: Current User ID: " + currentUser.getId());
+                System.out.println("DEBUG: Booking User ID: " + booking.getUser().getId());
+                System.out.println("DEBUG: Shop Owner ID: " + booking.getShop().getOwner().getId());
+
                 // Only the user who made the booking or the shop owner can cancel
                 if (!booking.getUser().getId().equals(currentUser.getId()) &&
                         !booking.getShop().getOwner().getId().equals(currentUser.getId())) {
