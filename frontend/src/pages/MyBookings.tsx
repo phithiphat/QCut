@@ -67,7 +67,7 @@ const MyBookings: React.FC = () => {
                                                     alert('Booking cancelled successfully!');
                                                 }).catch((error) => {
                                                     console.error("Cancel failed", error);
-                                                    alert('Failed to cancel booking: ' + (error.response?.data || error.message));
+                                                    alert('Failed to cancel booking: ' + JSON.stringify(error.response?.data || error.message));
                                                 });
                                             }
                                         }}
