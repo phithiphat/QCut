@@ -64,6 +64,10 @@ const MyBookings: React.FC = () => {
                                             if (window.confirm('Are you sure you want to cancel this booking?') && booking.id) {
                                                 BookingService.updateBookingStatus(booking.id, 'CANCELLED').then(() => {
                                                     setBookings(bookings.map(b => b.id === booking.id ? { ...b, status: 'CANCELLED' } : b));
+                                                    alert('Booking cancelled successfully!');
+                                                }).catch((error) => {
+                                                    console.error("Cancel failed", error);
+                                                    alert('Failed to cancel booking: ' + (error.response?.data || error.message));
                                                 });
                                             }
                                         }}
