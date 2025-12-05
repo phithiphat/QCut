@@ -47,8 +47,12 @@ const ShopList: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {shops.map((shop) => (
                         <div key={shop.id} className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-col">
-                            <div className="h-48 bg-gray-200 flex items-center justify-center">
-                                <span className="text-4xl">💈</span>
+                            <div className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
+                                {shop.imageUrl ? (
+                                    <img src={shop.imageUrl} alt={shop.name} className="w-full h-full object-cover" />
+                                ) : (
+                                    <span className="text-6xl">💈</span>
+                                )}
                             </div>
                             <div className="p-6 flex-grow flex flex-col">
                                 <h3 className="text-xl font-bold text-gray-900 mb-2">{shop.name}</h3>

@@ -10,6 +10,7 @@ const CreateShop: React.FC = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [openingTime, setOpeningTime] = useState('09:00');
     const [closingTime, setClosingTime] = useState('20:00');
+    const [imageUrl, setImageUrl] = useState('');
 
     const handleCreateShop = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -20,6 +21,7 @@ const CreateShop: React.FC = () => {
                 phoneNumber,
                 openingTime,
                 closingTime,
+                imageUrl,
             };
             await ShopService.createShop(newShop);
             navigate('/dashboard');
@@ -77,6 +79,17 @@ const CreateShop: React.FC = () => {
                                 required
                             />
                         </div>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Shop Image URL (Optional)</label>
+                        <input
+                            type="url"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                            value={imageUrl}
+                            onChange={(e) => setImageUrl(e.target.value)}
+                            placeholder="e.g. https://example.com/shop-image.jpg"
+                        />
+                        <p className="text-xs text-gray-500 mt-1">Paste an image URL from Imgur, Google Drive, etc.</p>
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>

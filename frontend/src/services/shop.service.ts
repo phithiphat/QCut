@@ -7,6 +7,7 @@ export interface Shop {
     phoneNumber: string;
     openingTime: string;
     closingTime: string;
+    imageUrl?: string;
     owner?: any;
 }
 

@@ -26,6 +26,8 @@ public class Shop {
     private String openingTime; // Format: "09:00"
     private String closingTime; // Format: "20:00"
 
+    private String imageUrl; // Shop image URL
+
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
